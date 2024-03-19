@@ -1,20 +1,93 @@
-﻿// HomeWork18.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
+﻿
 #include <iostream>
+
+class Person {
+
+	int ScorePlayer{};
+	std::string NamePlayer{};
+
+public:
+
+	Person() {};
+
+	int GetIntScorePlayer() 
+	{
+		return ScorePlayer;
+	}
+
+	void GetScorePlayer() 
+	{
+		std::cout << ScorePlayer;
+	}
+
+	void SetScorePlayer(int ScorePlayer) 
+	{
+		this->ScorePlayer = ScorePlayer;
+	}
+
+	void GetNamePlayer() 
+	{
+		std::cout << NamePlayer;
+	}
+
+	void SetNamePlayer(std::string NamePlayer) 
+	{
+		this->NamePlayer = NamePlayer;
+	}
+
+};
 
 int main()
 {
-    std::cout << "Hello World!\n";
-}
+	int NumberPlayer{};
+	int CinScore{};
+	Person Temp{};
+	std::string CinName;
 
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
+	std::cout << "Enter number player: ";
+	std::cin >> NumberPlayer;
 
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+	std::cout << '\n';
+
+	Person* ListPlayer = new Person[NumberPlayer];
+
+	for (int i = 0; i < NumberPlayer; i++) 
+	{
+		std::cout << "Enter name player: ";
+		std::cin >> CinName;
+		ListPlayer[i].SetNamePlayer(CinName);
+
+		std::cout << "Enter score " << CinName << ": ";
+		std::cin >> CinScore;
+		ListPlayer[i].SetScorePlayer(CinScore);
+
+		std::cout << '\n';
+	}
+
+	//sort
+	for (int i = 0; i < NumberPlayer - 1; i++) 
+	{
+		for (int j = 0; j < NumberPlayer - 1; j++) 
+		{
+			if (ListPlayer[j + 1].GetIntScorePlayer() > ListPlayer[j].GetIntScorePlayer()) 
+			{
+				Temp = std::move(ListPlayer[j + 1]);
+				ListPlayer[j + 1] = std::move(ListPlayer[j]);
+				ListPlayer[j] = std::move(Temp);
+			}
+		}
+	}
+
+	for (int i = 0; i < NumberPlayer; i++) 
+	{
+		ListPlayer[i].GetNamePlayer();
+		std::cout << " ";
+		ListPlayer[i].GetScorePlayer();
+		std::cout << '\n';
+	}
+
+	delete[] ListPlayer;
+	ListPlayer = nullptr;
+
+	return 0;
+}	
